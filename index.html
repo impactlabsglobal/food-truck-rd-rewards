@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Food Truck RD Rewards</title>
+  <title>BOWL RD Food Truck Rewards</title>
   <style>
     :root {
       --ink: #050505;
@@ -81,7 +81,7 @@
 
     .brand-name {
       margin: 0;
-      font-size: clamp(26px, 3vw, 36px);
+      font-size: clamp(28px, 3.2vw, 38px);
       line-height: .9;
       font-weight: 900;
       letter-spacing: 0;
@@ -90,19 +90,20 @@
 
     .brand-sub {
       margin-top: 10px;
-      font-size: clamp(13px, 1.4vw, 17px);
-      font-weight: 800;
-      letter-spacing: .35em;
+      font-size: clamp(14px, 1.6vw, 18px);
+      font-weight: 900;
+      letter-spacing: .14em;
     }
 
     .top-actions {
       display: flex;
-      gap: 36px;
+      gap: 14px;
       align-items: center;
     }
 
     .help-button,
-    .home-button {
+    .home-button,
+    .header-cart {
       min-height: 56px;
       border: 2px solid var(--line);
       border-radius: 16px;
@@ -117,6 +118,21 @@
       display: flex;
       align-items: center;
       gap: 10px;
+    }
+
+    .header-cart {
+      min-width: 132px;
+      padding: 0 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .header-cart-total {
+      font-size: 18px;
+      line-height: 1;
+      white-space: nowrap;
     }
 
     .home-button {
@@ -751,6 +767,15 @@
         padding: 0;
       }
 
+      .header-cart {
+        min-width: 110px;
+        padding: 0 10px;
+      }
+
+      .header-cart-total {
+        font-size: 16px;
+      }
+
       .stats {
         grid-template-columns: repeat(2, minmax(0, 1fr));
         padding: 22px;
@@ -814,11 +839,33 @@
       }
 
       .brand-name {
-        font-size: 22px;
+        font-size: 24px;
       }
 
       .brand-sub {
-        font-size: 11px;
+        font-size: 12px;
+      }
+
+      .topbar {
+        align-items: start;
+      }
+
+      .top-actions {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+      }
+
+      .header-cart {
+        grid-column: 1 / -1;
+        min-width: 0;
+        min-height: 48px;
+      }
+
+      .help-button,
+      .home-button {
+        min-height: 48px;
+        width: 48px;
       }
 
       .stats {
@@ -859,7 +906,7 @@
   </style>
 </head>
 <body>
-  <main class="tablet" aria-label="Food Truck RD Rewards">
+  <main class="tablet" aria-label="BOWL RD Food Truck Rewards">
     <header class="topbar">
       <div class="brand">
         <div class="brand-mark" aria-hidden="true">
@@ -872,12 +919,21 @@
           </svg>
         </div>
         <div>
-          <h1 class="brand-name">FOOD TRUCK RD</h1>
-          <div class="brand-sub">REWARDS</div>
+          <h1 class="brand-name">BOWL RD</h1>
+          <div class="brand-sub">FOOD TRUCK</div>
         </div>
       </div>
 
       <div class="top-actions">
+        <button class="header-cart" type="button" data-view="inicio" aria-label="Carrito y monto actual">
+          <svg width="29" height="29" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M6 6h15l-2 8H8L6 6z"></path>
+            <path d="M6 6 5 3H2"></path>
+            <circle cx="9" cy="20" r="1.7"></circle>
+            <circle cx="18" cy="20" r="1.7"></circle>
+          </svg>
+          <span class="header-cart-total" id="headerCartTotal">RD$0</span>
+        </button>
         <button class="help-button" type="button" data-view="ayuda" aria-label="Ayuda">
           <svg width="27" height="27" viewBox="0 0 24 24" aria-hidden="true">
             <circle cx="12" cy="12" r="9"></circle>
@@ -1261,6 +1317,7 @@
     const cartList = document.getElementById("cartList");
     const subtotalEl = document.getElementById("subtotal");
     const totalEl = document.getElementById("total");
+    const headerCartTotal = document.getElementById("headerCartTotal");
     const topOrderTotal = document.getElementById("topOrderTotal");
     const topOrderPoints = document.getElementById("topOrderPoints");
     const pointsEarnedEl = document.getElementById("pointsEarned");
@@ -1350,6 +1407,7 @@
 
       subtotalEl.textContent = formatMoney(subtotal);
       totalEl.textContent = formatMoney(subtotal);
+      headerCartTotal.textContent = formatMoney(subtotal);
       pointsEarnedEl.textContent = formatNumber(pointsEarned) + " pts";
       topOrderTotal.textContent = formatMoney(subtotal);
       topOrderPoints.textContent = "+" + formatNumber(pointsEarned) + " pts";

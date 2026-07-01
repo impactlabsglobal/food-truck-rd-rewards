@@ -775,6 +775,38 @@
       font-weight: 900;
     }
 
+    .cloud-panel {
+      display: grid;
+      gap: 18px;
+    }
+
+    .cloud-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .cloud-box {
+      border: 2px solid var(--ink);
+      border-radius: 12px;
+      padding: 18px;
+      text-align: left;
+    }
+
+    .cloud-box h3 {
+      margin: 0 0 10px;
+      font-size: 21px;
+      font-weight: 900;
+    }
+
+    .cloud-box p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 16px;
+      font-weight: 800;
+      line-height: 1.4;
+    }
+
     .code-panel {
       text-align: center;
       padding-block: 24px 28px;
@@ -1060,6 +1092,10 @@
       }
 
       .reward-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .cloud-grid {
         grid-template-columns: 1fr;
       }
 
@@ -1459,6 +1495,40 @@
       </div>
     </section>
 
+    <section class="panel cloud-panel app-view app-after-login hidden" data-panel="cloud">
+      <div>
+        <h2 class="section-title">CLOUD KITCHEN AFILIADO</h2>
+        <p class="section-copy">Cocinas autorizadas pueden preparar pedidos bajo la marca BOWL RD con recetas, empaque y estándares oficiales.</p>
+      </div>
+
+      <div class="cloud-grid">
+        <article class="cloud-box">
+          <h3>Requisitos</h3>
+          <p>Cocina autorizada, normas sanitarias, capacitación en recetas BOWL RD, ingredientes aprobados, uniforme y bolsas oficiales.</p>
+        </article>
+        <article class="cloud-box">
+          <h3>Cobertura</h3>
+          <p>El afiliado registra su ubicación exacta. Solo puede existir un afiliado activo por cada radio de 5 millas, salvo autorización.</p>
+        </article>
+        <article class="cloud-box">
+          <h3>Límite inicial</h3>
+          <p>Cada cocina inicia con máximo 100 órdenes por día. El límite sube según desempeño, calidad y tiempos de preparación.</p>
+        </article>
+        <article class="cloud-box">
+          <h3>Calidad</h3>
+          <p>Auditorías programadas y aleatorias, fotos de platos cuando se requiera y suspensión por incumplimientos repetidos.</p>
+        </article>
+        <article class="cloud-box">
+          <h3>Entrega</h3>
+          <p>Toda orden debe salir en bolsa oficial BOWL RD con presentación uniforme en todas las cocinas afiliadas.</p>
+        </article>
+        <article class="cloud-box">
+          <h3>Comisión e indicadores</h3>
+          <p>Comisión sugerida de 10% por pedido. Se mide tiempo promedio, cancelaciones, calificación, inventario y recetas.</p>
+        </article>
+      </div>
+    </section>
+
     <section class="panel view-placeholder app-view app-after-login hidden" data-panel="perfil">
       <div>
         <h2>Perfil</h2>
@@ -1526,14 +1596,13 @@
         </svg>
         HISTORIAL
       </button>
-      <button type="button" data-view="invitar">
+      <button type="button" data-view="cloud">
         <svg width="31" height="31" viewBox="0 0 24 24" aria-hidden="true">
-          <circle cx="9" cy="8" r="3"></circle>
-          <path d="M3.5 20c.4-4 2.4-6 5.5-6s5.1 2 5.5 6"></path>
-          <circle cx="17" cy="9" r="2.5"></circle>
-          <path d="M15.5 15.5c2.6.3 4.2 1.8 5 4.5"></path>
+          <path d="M4 20V9l8-5 8 5v11"></path>
+          <path d="M8 20v-7h8v7"></path>
+          <path d="M9 9h6"></path>
         </svg>
-        INVITAR
+        CLOUD
       </button>
       <button type="button" data-view="perfil">
         <svg width="31" height="31" viewBox="0 0 24 24" aria-hidden="true">
@@ -1577,23 +1646,18 @@
 
     const rewards = [
       {
-        name: "BEBIDA GRATIS",
-        cost: 100,
+        name: "JUGO GRATIS",
+        cost: 500,
         icon: "drink"
       },
       {
-        name: "10% DESCUENTO",
-        cost: 200,
+        name: "GUACAMOLE GRATIS",
+        cost: 300,
         icon: "avocado"
       },
       {
-        name: "EXTRA GRATIS",
-        cost: 250,
-        icon: "protein"
-      },
-      {
-        name: "COMBO ESPECIAL",
-        cost: 800,
+        name: "BOWL GRATIS",
+        cost: 1250,
         icon: "bowl"
       }
     ];
@@ -1656,10 +1720,10 @@
         price: 50
       },
       {
-        id: "extra-aguacate",
+        id: "extra-guacamole",
         category: "Extras",
-        name: "Aguacate",
-        description: "Extra de aguacate para tu bowl.",
+        name: "Guacamole",
+        description: "Extra de guacamole para tu bowl.",
         price: 25
       }
     ];

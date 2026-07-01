@@ -514,6 +514,29 @@
       margin-bottom: 0;
     }
 
+    .compact-menu-head {
+      align-items: center;
+    }
+
+    .menu-select-label {
+      display: grid;
+      gap: 6px;
+      font-size: 14px;
+      font-weight: 900;
+      min-width: 210px;
+    }
+
+    .menu-select-label select {
+      min-height: 58px;
+      border: 2px solid var(--ink);
+      border-radius: 12px;
+      background: var(--paper);
+      color: var(--ink);
+      padding: 0 14px;
+      font-size: 22px;
+      font-weight: 900;
+    }
+
     .category-tabs {
       display: flex;
       gap: 10px;
@@ -1300,12 +1323,18 @@
           </div>
         </section>
 
-        <div class="menu-head">
+        <div class="menu-head compact-menu-head">
           <div>
-            <h2 class="section-title">MENU COMPLETO</h2>
-            <p class="section-copy">Agrega jugos, extras o bowls con jugo incluido.</p>
+            <h2 class="section-title">EXTRAS Y JUGOS</h2>
+            <p class="section-copy">Agrega bebida o extra a tu bowl.</p>
           </div>
-          <div class="category-tabs" id="categoryTabs" aria-label="Categorias del menu"></div>
+          <label class="menu-select-label">
+            Ver
+            <select id="categorySelect" aria-label="Seleccionar extras o jugos">
+              <option value="Jugos">Jugos</option>
+              <option value="Extras">Extras</option>
+            </select>
+          </label>
         </div>
         <div class="menu-grid" id="menuGrid"></div>
       </div>
@@ -1571,67 +1600,53 @@
 
     const menuProducts = [
       {
-        id: "bowl-pollo",
-        category: "Bowls",
-        name: "Bowl de Pollo",
-        description: "Base, vegetales y salsas incluidas. Con jugo incluido por RD$30 extra.",
-        price: 270
-      },
-      {
-        id: "bowl-cerdo",
-        category: "Bowls",
-        name: "Bowl de Cerdo",
-        description: "Base, vegetales y salsas incluidas. Con jugo incluido por RD$30 extra.",
-        price: 290
-      },
-      {
-        id: "bowl-res",
-        category: "Bowls",
-        name: "Bowl de Res",
-        description: "Base, vegetales y salsas incluidas. Con jugo incluido por RD$30 extra.",
-        price: 310
-      },
-      {
         id: "bowl-pollo-solo",
-        category: "Bowls sin jugo",
+        category: "Bowls",
         name: "Bowl de Pollo",
         description: "Base, todos los vegetales y todas las salsas.",
         price: 240
       },
       {
         id: "bowl-cerdo-solo",
-        category: "Bowls sin jugo",
+        category: "Bowls",
         name: "Bowl de Cerdo",
         description: "Base, todos los vegetales y todas las salsas.",
         price: 260
       },
       {
         id: "bowl-res-solo",
-        category: "Bowls sin jugo",
+        category: "Bowls",
         name: "Bowl de Res",
         description: "Base, todos los vegetales y todas las salsas.",
         price: 280
       },
       {
+        id: "jugo-naranja",
+        category: "Jugos",
+        name: "Jugo de naranja 🍊",
+        description: "Jugo frio natural.",
+        price: 40
+      },
+      {
         id: "jugo-limon",
         category: "Jugos",
-        name: "Jugo de limon",
+        name: "Jugo de limón",
         description: "Jugo frio de la casa.",
         price: 30
       },
       {
-        id: "jugo-chinola",
+        id: "jugo-strawberry",
         category: "Jugos",
-        name: "Jugo de chinola",
-        description: "Jugo natural frio.",
+        name: "Jugo de strawberry",
+        description: "Jugo frio de fresa.",
         price: 40
       },
       {
-        id: "jugo-tamarindo",
+        id: "soda",
         category: "Jugos",
-        name: "Jugo de tamarindo",
-        description: "Jugo natural frio.",
-        price: 40
+        name: "Soda",
+        description: "Bebida fria.",
+        price: 35
       },
       {
         id: "extra-proteina",
@@ -1659,7 +1674,7 @@
     const pointsEl = document.getElementById("points");
     const visitsEl = document.getElementById("visits");
     const featuredOrder = document.getElementById("featuredOrder");
-    const categoryTabs = document.getElementById("categoryTabs");
+    const categorySelect = document.getElementById("categorySelect");
     const menuGrid = document.getElementById("menuGrid");
     const cartList = document.getElementById("cartList");
     const subtotalEl = document.getElementById("subtotal");
@@ -1686,7 +1701,7 @@
     const codeCopy = document.getElementById("codeCopy");
     const timerEl = document.getElementById("timer");
     const cart = new Map();
-    let activeCategory = "Todos";
+    let activeCategory = "Jugos";
     let secondsLeft = 14 * 60 + 58;
 
     function formatNumber(value) {
@@ -1743,19 +1758,8 @@
       renderHistory();
     }
 
-    function renderCategories() {
-      const categories = ["Todos", ...new Set(menuProducts.map((product) => product.category))];
-
-      categoryTabs.innerHTML = categories.map((category) => {
-        const active = category === activeCategory ? " active" : "";
-        return '<button class="' + active + '" type="button" data-category="' + category + '">' + category + "</button>";
-      }).join("");
-    }
-
     function renderMenu() {
-      const products = activeCategory === "Todos"
-        ? menuProducts
-        : menuProducts.filter((product) => product.category === activeCategory);
+      const products = menuProducts.filter((product) => product.category === activeCategory);
 
       menuGrid.innerHTML = products.map((product) => {
         return '<article class="menu-item">' +
@@ -1878,14 +1882,8 @@
       renderHistory();
     }
 
-    categoryTabs.addEventListener("click", (event) => {
-      const button = event.target.closest("[data-category]");
-      if (!button) {
-        return;
-      }
-
-      activeCategory = button.dataset.category;
-      renderCategories();
+    categorySelect.addEventListener("change", () => {
+      activeCategory = categorySelect.value;
       renderMenu();
     });
 
@@ -1956,7 +1954,6 @@
       timerEl.textContent = minutes + ":" + seconds;
     }, 1000);
 
-    renderCategories();
     renderMenu();
     renderCart();
     renderRewards();

@@ -285,6 +285,45 @@
       font-weight: 900;
     }
 
+    .login-options {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+      text-align: left;
+    }
+
+    .login-card {
+      border: 2px solid var(--ink);
+      border-radius: 14px;
+      padding: 20px;
+      display: grid;
+      gap: 14px;
+    }
+
+    .login-card h3 {
+      margin: 0;
+      font-size: 24px;
+      font-weight: 900;
+    }
+
+    .affiliate-fields {
+      display: grid;
+      gap: 10px;
+    }
+
+    .affiliate-fields input,
+    .affiliate-fields select {
+      width: 100%;
+      min-height: 52px;
+      border: 2px solid var(--ink);
+      border-radius: 10px;
+      padding: 0 12px;
+      background: #fff;
+      color: var(--ink);
+      font-size: 17px;
+      font-weight: 900;
+    }
+
     .stats {
       border: 2px solid var(--line);
       border-radius: var(--radius);
@@ -1061,6 +1100,10 @@
         justify-content: stretch;
       }
 
+      .login-options {
+        grid-template-columns: 1fr;
+      }
+
       .identity-button,
       .login-button {
         flex: 1;
@@ -1285,28 +1328,48 @@
 
     <section class="login-panel" aria-label="Acceso del cliente">
       <div>
-        <h2 class="login-title">Acceso de cliente</h2>
-        <p class="login-copy">Entra para ordenar, acumular puntos y canjear premios.</p>
+        <h2 class="login-title">Entrar a BOWL RD</h2>
+        <p class="login-copy">Ordena como cliente o registra tu cocina afiliada Cloud Kitchen.</p>
       </div>
 
-      <div class="login-fields">
-        <input id="loginPhone" type="tel" value="809-123-4567" inputmode="tel" aria-label="Numero de telefono" />
-        <input id="loginCode" type="password" value="1234" inputmode="numeric" maxlength="4" aria-label="Codigo de 4 digitos" />
+      <div class="login-options">
+        <article class="login-card">
+          <h3>Cliente</h3>
+          <p class="login-copy">Haz pedidos, gana puntos y canjea premios.</p>
+          <div class="login-fields">
+            <input id="loginPhone" type="tel" value="809-123-4567" inputmode="tel" aria-label="Numero de telefono" />
+            <input id="loginCode" type="password" value="1234" inputmode="numeric" maxlength="4" aria-label="Codigo de 4 digitos" />
+          </div>
+          <div class="login-actions">
+            <button class="login-button" type="button" id="phoneLoginButton">ENTRAR</button>
+            <button class="identity-button" type="button" data-provider="Google" aria-label="Entrar con Google">
+              <span aria-hidden="true">G</span>
+              Google
+            </button>
+            <button class="identity-button" type="button" data-provider="Apple ID" aria-label="Entrar con Apple ID">
+              <span aria-hidden="true"></span>
+              Apple
+            </button>
+          </div>
+        </article>
+
+        <article class="login-card">
+          <h3>Afiliado Cloud Kitchen</h3>
+          <p class="login-copy">Registra tu ubicación de venta y opera bajo estándares BOWL RD.</p>
+          <div class="affiliate-fields">
+            <input id="affiliateName" type="text" value="Cocina afiliada" aria-label="Nombre de cocina" />
+            <input id="affiliateLocation" type="text" placeholder="Ubicación exacta de venta" aria-label="Ubicación de venta" />
+            <input id="affiliateRadius" type="text" value="Radio asignado: 5 millas" aria-label="Radio territorial" />
+            <select id="affiliateCapacity" aria-label="Capacidad diaria">
+              <option>Hasta 100 órdenes por día</option>
+              <option>Solicitar aumento de capacidad</option>
+            </select>
+          </div>
+          <button class="login-button" type="button" id="affiliateLoginButton">REGISTRAR AFILIADO</button>
+        </article>
       </div>
 
-      <div class="login-actions">
-        <button class="login-button" type="button" id="phoneLoginButton">ENTRAR</button>
-        <button class="identity-button" type="button" data-provider="Google" aria-label="Entrar con Google">
-          <span aria-hidden="true">G</span>
-          Google
-        </button>
-        <button class="identity-button" type="button" data-provider="Apple ID" aria-label="Entrar con Apple ID">
-          <span aria-hidden="true"></span>
-          Apple
-        </button>
-      </div>
-
-      <p class="login-status" id="loginStatus">Usa tu telefono, Google o Apple ID.</p>
+      <p class="login-status" id="loginStatus">Cliente: telefono, Google o Apple ID. Afiliado: registra ubicación de venta.</p>
     </section>
 
     <section class="panel menu-panel app-view app-after-login" data-panel="inicio">
@@ -1752,6 +1815,10 @@
     const loginPhoneEl = document.getElementById("loginPhone");
     const loginCodeEl = document.getElementById("loginCode");
     const phoneLoginButton = document.getElementById("phoneLoginButton");
+    const affiliateLoginButton = document.getElementById("affiliateLoginButton");
+    const affiliateNameEl = document.getElementById("affiliateName");
+    const affiliateLocationEl = document.getElementById("affiliateLocation");
+    const affiliateCapacityEl = document.getElementById("affiliateCapacity");
     const loginStatus = document.getElementById("loginStatus");
     const paymentMethodEl = document.getElementById("paymentMethod");
     const checkoutButton = document.getElementById("checkoutButton");
@@ -1820,6 +1887,31 @@
       document.body.classList.add("is-logged-in");
       renderStats();
       renderHistory();
+    }
+
+    function signInAffiliate() {
+      const affiliateName = affiliateNameEl.value.trim() || "Cocina afiliada";
+      const location = affiliateLocationEl.value.trim() || "Ubicación pendiente";
+      const capacity = affiliateCapacityEl.value;
+
+      customer.name = affiliateName;
+      customer.phone = "Afiliado Cloud Kitchen";
+      customer.history.unshift("Cloud Kitchen: " + affiliateName + " | " + location + " | " + capacity);
+      document.body.classList.add("is-logged-in");
+      loginStatus.textContent = "Afiliado activo: " + affiliateName;
+      renderStats();
+      renderHistory();
+      showView("cloud");
+    }
+
+    function showView(view) {
+      document.querySelectorAll(".app-view").forEach((panel) => {
+        panel.classList.toggle("hidden", panel.dataset.panel !== view);
+      });
+
+      document.querySelectorAll(".nav button").forEach((navButton) => {
+        navButton.classList.toggle("active", navButton.dataset.view === view);
+      });
     }
 
     function renderMenu() {
@@ -1980,6 +2072,7 @@
 
     checkoutButton.addEventListener("click", confirmOrder);
     phoneLoginButton.addEventListener("click", signInWithPhone);
+    affiliateLoginButton.addEventListener("click", signInAffiliate);
 
     document.querySelectorAll("[data-provider]").forEach((button) => {
       button.addEventListener("click", () => {
@@ -1996,15 +2089,7 @@
 
     document.querySelectorAll("[data-view]").forEach((button) => {
       button.addEventListener("click", () => {
-        const view = button.dataset.view;
-
-        document.querySelectorAll(".app-view").forEach((panel) => {
-          panel.classList.toggle("hidden", panel.dataset.panel !== view);
-        });
-
-        document.querySelectorAll(".nav button").forEach((navButton) => {
-          navButton.classList.toggle("active", navButton.dataset.view === view);
-        });
+        showView(button.dataset.view);
       });
     });
 

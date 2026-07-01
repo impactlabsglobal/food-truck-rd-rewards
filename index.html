@@ -418,6 +418,90 @@
       align-items: start;
     }
 
+    .featured-order {
+      margin-bottom: 24px;
+    }
+
+    .featured-head {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    .featured-head h2 {
+      margin: 0;
+      font-size: clamp(32px, 4vw, 48px);
+      line-height: 1;
+      font-weight: 900;
+    }
+
+    .eta-pill {
+      border: 2px solid var(--ink);
+      border-radius: 999px;
+      padding: 12px 16px;
+      font-size: 18px;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .featured-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .featured-bowl {
+      border: 2px solid var(--ink);
+      border-radius: 14px;
+      padding: 18px;
+      display: grid;
+      gap: 14px;
+      background: var(--paper);
+      min-height: 238px;
+    }
+
+    .featured-icon {
+      width: 72px;
+      height: 72px;
+      border-radius: 999px;
+      display: grid;
+      place-items: center;
+      background: #000;
+      color: #fff;
+      font-size: 34px;
+      font-weight: 900;
+    }
+
+    .featured-bowl h3 {
+      margin: 0;
+      font-size: clamp(20px, 2.2vw, 25px);
+      font-weight: 900;
+    }
+
+    .featured-bowl p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.35;
+      font-weight: 800;
+    }
+
+    .featured-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      align-self: end;
+    }
+
+    .featured-price {
+      font-size: 25px;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
     .menu-head {
       display: flex;
       align-items: end;
@@ -960,6 +1044,10 @@
         grid-template-columns: 1fr;
       }
 
+      .featured-grid {
+        grid-template-columns: 1fr;
+      }
+
       .cart {
         position: static;
       }
@@ -1071,6 +1159,10 @@
         display: grid;
       }
 
+      .featured-head {
+        display: grid;
+      }
+
       .item-bottom {
         display: grid;
       }
@@ -1158,6 +1250,110 @@
       <p class="login-status" id="loginStatus">Usa tu telefono, Google o Apple ID.</p>
     </section>
 
+    <section class="panel menu-panel app-view app-after-login" data-panel="inicio">
+      <div>
+        <section class="featured-order" id="featuredOrder" aria-label="Bowls principales">
+          <div class="featured-head">
+            <div>
+              <h2>ORDENA TU BOWL</h2>
+              <p class="section-copy">Elige tu proteína, base, vegetales y salsas.</p>
+            </div>
+            <div class="eta-pill">Listo en 8-12 min</div>
+          </div>
+
+          <div class="featured-grid">
+            <article class="featured-bowl">
+              <div class="featured-icon" aria-hidden="true">🍚</div>
+              <div>
+                <h3>Bowl de Pollo</h3>
+                <p>Base, vegetales y salsas incluidas. Jugo por RD$30 extra.</p>
+              </div>
+              <div class="featured-bottom">
+                <span class="featured-price">RD$240</span>
+                <button class="add-button" type="button" data-add="bowl-pollo-solo">ORDENAR</button>
+              </div>
+            </article>
+
+            <article class="featured-bowl">
+              <div class="featured-icon" aria-hidden="true">🥩</div>
+              <div>
+                <h3>Bowl de Res</h3>
+                <p>Res con base, todos los vegetales y todas las salsas.</p>
+              </div>
+              <div class="featured-bottom">
+                <span class="featured-price">RD$280</span>
+                <button class="add-button" type="button" data-add="bowl-res-solo">ORDENAR</button>
+              </div>
+            </article>
+
+            <article class="featured-bowl">
+              <div class="featured-icon" aria-hidden="true">🐖</div>
+              <div>
+                <h3>Bowl de Cerdo</h3>
+                <p>Cerdo con base, vegetales frescos y salsas de la casa.</p>
+              </div>
+              <div class="featured-bottom">
+                <span class="featured-price">RD$260</span>
+                <button class="add-button" type="button" data-add="bowl-cerdo-solo">ORDENAR</button>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <div class="menu-head">
+          <div>
+            <h2 class="section-title">MENU COMPLETO</h2>
+            <p class="section-copy">Agrega jugos, extras o bowls con jugo incluido.</p>
+          </div>
+          <div class="category-tabs" id="categoryTabs" aria-label="Categorias del menu"></div>
+        </div>
+        <div class="menu-grid" id="menuGrid"></div>
+      </div>
+
+      <aside class="cart" aria-label="Carrito de pedido">
+        <h3>Tu orden</h3>
+        <div class="cart-list" id="cartList">
+          <p class="cart-empty">Agrega productos del menu para calcular tu total y tus puntos.</p>
+        </div>
+
+        <div class="summary" aria-live="polite">
+          <div class="summary-row">
+            <span>Subtotal</span>
+            <strong id="subtotal">$0.00</strong>
+          </div>
+          <div class="summary-row">
+            <span>Puntos a ganar</span>
+            <strong id="pointsEarned">0 pts</strong>
+          </div>
+          <div class="summary-row total">
+            <span>Total</span>
+            <strong id="total">$0.00</strong>
+          </div>
+        </div>
+
+        <div class="customer-fields">
+          <label>
+            Nombre
+            <input id="customerName" type="text" value="Cliente Bowl" autocomplete="name" />
+          </label>
+          <label>
+            Telefono
+            <input id="customerPhone" type="tel" value="809-123-4567" autocomplete="tel" />
+          </label>
+          <label>
+            Pago
+            <select id="paymentMethod">
+              <option>Pago en caja</option>
+              <option>Pago online</option>
+            </select>
+          </label>
+        </div>
+
+        <button class="checkout-button" type="button" id="checkoutButton">CONFIRMAR ORDEN</button>
+        <p class="checkout-note" id="checkoutNote"></p>
+      </aside>
+    </section>
+
     <section class="stats app-after-login" aria-label="Resumen del cliente">
       <article class="stat">
         <div class="round-icon" aria-hidden="true">
@@ -1211,62 +1407,6 @@
           <p class="stat-note">Salir</p>
         </div>
       </article>
-    </section>
-
-    <section class="panel menu-panel app-view app-after-login" data-panel="inicio">
-      <div>
-        <div class="menu-head">
-          <div>
-            <h2 class="section-title">MENU ONLINE</h2>
-            <p class="section-copy">Ordena en pesos RD y gana puntos por cada compra.</p>
-          </div>
-          <div class="category-tabs" id="categoryTabs" aria-label="Categorias del menu"></div>
-        </div>
-        <div class="menu-grid" id="menuGrid"></div>
-      </div>
-
-      <aside class="cart" aria-label="Carrito de pedido">
-        <h3>Tu orden</h3>
-        <div class="cart-list" id="cartList">
-          <p class="cart-empty">Agrega productos del menu para calcular tu total y tus puntos.</p>
-        </div>
-
-        <div class="summary" aria-live="polite">
-          <div class="summary-row">
-            <span>Subtotal</span>
-            <strong id="subtotal">$0.00</strong>
-          </div>
-          <div class="summary-row">
-            <span>Puntos a ganar</span>
-            <strong id="pointsEarned">0 pts</strong>
-          </div>
-          <div class="summary-row total">
-            <span>Total</span>
-            <strong id="total">$0.00</strong>
-          </div>
-        </div>
-
-        <div class="customer-fields">
-          <label>
-            Nombre
-            <input id="customerName" type="text" value="Cliente Bowl" autocomplete="name" />
-          </label>
-          <label>
-            Telefono
-            <input id="customerPhone" type="tel" value="809-123-4567" autocomplete="tel" />
-          </label>
-          <label>
-            Pago
-            <select id="paymentMethod">
-              <option>Pago en caja</option>
-              <option>Pago online</option>
-            </select>
-          </label>
-        </div>
-
-        <button class="checkout-button" type="button" id="checkoutButton">CONFIRMAR ORDEN</button>
-        <p class="checkout-note" id="checkoutNote"></p>
-      </aside>
     </section>
 
     <section class="panel redeem-panel app-view app-after-login hidden" data-panel="canjear">
@@ -1518,6 +1658,7 @@
 
     const pointsEl = document.getElementById("points");
     const visitsEl = document.getElementById("visits");
+    const featuredOrder = document.getElementById("featuredOrder");
     const categoryTabs = document.getElementById("categoryTabs");
     const menuGrid = document.getElementById("menuGrid");
     const cartList = document.getElementById("cartList");
@@ -1749,6 +1890,13 @@
     });
 
     menuGrid.addEventListener("click", (event) => {
+      const button = event.target.closest("[data-add]");
+      if (button) {
+        addProduct(button.dataset.add);
+      }
+    });
+
+    featuredOrder.addEventListener("click", (event) => {
       const button = event.target.closest("[data-add]");
       if (button) {
         addProduct(button.dataset.add);

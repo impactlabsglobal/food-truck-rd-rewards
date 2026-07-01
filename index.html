@@ -605,6 +605,88 @@
       margin: -1px;
     }
 
+    .site-footer {
+      border: 2px solid var(--line);
+      border-radius: 14px;
+      padding: 28px 22px;
+      text-align: center;
+      background: var(--paper);
+    }
+
+    .footer-title {
+      margin: 0 0 18px;
+      color: #555d70;
+      font-size: clamp(18px, 2vw, 26px);
+      font-weight: 900;
+    }
+
+    .social-row {
+      display: flex;
+      justify-content: center;
+      gap: 18px;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+    }
+
+    .social-link {
+      width: 72px;
+      height: 72px;
+      border-radius: 999px;
+      display: grid;
+      place-items: center;
+      color: #fff;
+      text-decoration: none;
+      font-size: 26px;
+      font-weight: 900;
+    }
+
+    .social-link.facebook {
+      background: #315aa8;
+    }
+
+    .social-link.youtube {
+      background: #e31f2b;
+    }
+
+    .social-link.instagram {
+      background: radial-gradient(circle at 30% 110%, #ffe66d 0 23%, #ff5555 42%, #bd2cba 67%, #405de6 100%);
+    }
+
+    .social-link.tiktok {
+      background: #000;
+    }
+
+    .social-handle {
+      margin: 0 0 18px;
+      color: var(--ink);
+      font-size: clamp(24px, 3vw, 38px);
+      font-weight: 900;
+      letter-spacing: .04em;
+    }
+
+    .legal-links {
+      display: flex;
+      justify-content: center;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin: 0 0 18px;
+    }
+
+    .legal-links a {
+      color: #0b7d43;
+      font-size: clamp(17px, 2vw, 24px);
+      font-weight: 900;
+      text-decoration: underline;
+      text-underline-offset: 5px;
+    }
+
+    .footer-copy {
+      margin: 0;
+      color: #6b7280;
+      font-size: clamp(16px, 2vw, 25px);
+      font-weight: 700;
+    }
+
     .hidden {
       display: none;
     }
@@ -714,6 +796,10 @@
         right: 12px;
         bottom: 12px;
         z-index: 10;
+      }
+
+      .site-footer {
+        margin-bottom: 12px;
       }
     }
 
@@ -839,15 +925,14 @@
       <article class="stat">
         <div class="round-icon" aria-hidden="true">
           <svg width="36" height="36" viewBox="0 0 24 24">
-            <path class="fill-white" d="M5 13h3v7H5z"></path>
-            <path class="fill-white" d="M11 9h3v11h-3z"></path>
-            <path class="fill-white" d="M17 5h3v15h-3z"></path>
+            <path class="fill-white" d="M7 6h10l1.5 15h-13L7 6z"></path>
+            <path d="M9 6a3 3 0 0 1 6 0"></path>
           </svg>
         </div>
         <div>
-          <p class="stat-label">NIVEL</p>
-          <p class="stat-value">PLATA</p>
-          <p class="stat-note">2,069 pts para Oro</p>
+          <p class="stat-label">ORDEN ACTUAL</p>
+          <p class="stat-value" id="topOrderTotal">RD$0</p>
+          <p class="stat-note" id="topOrderPoints">0 pts</p>
         </div>
       </article>
 
@@ -1027,6 +1112,24 @@
         PERFIL
       </button>
     </nav>
+
+    <footer class="site-footer" aria-label="Redes sociales y enlaces legales">
+      <p class="footer-title">REDES SOCIALES Y ENLACES</p>
+      <div class="social-row">
+        <a class="social-link facebook" href="https://www.facebook.com/RDBOLW" aria-label="Facebook RDBOLW">f</a>
+        <a class="social-link youtube" href="https://www.youtube.com/@RDBOLW" aria-label="YouTube RDBOLW">▶</a>
+        <a class="social-link instagram" href="https://www.instagram.com/RDBOLW" aria-label="Instagram RDBOLW">◎</a>
+        <a class="social-link tiktok" href="https://www.tiktok.com/@RDBOLW" aria-label="TikTok RDBOLW">♪</a>
+      </div>
+      <p class="social-handle">@RDBOLW</p>
+      <div class="legal-links">
+        <a href="#perfil">Terminos</a>
+        <a href="#perfil">Privacidad</a>
+        <a href="#perfil">Cookies</a>
+        <a href="#perfil">Contacto</a>
+      </div>
+      <p class="footer-copy">© 2026 Food Truck RD. All Rights Reserved.</p>
+    </footer>
   </main>
 
   <script>
@@ -1158,6 +1261,8 @@
     const cartList = document.getElementById("cartList");
     const subtotalEl = document.getElementById("subtotal");
     const totalEl = document.getElementById("total");
+    const topOrderTotal = document.getElementById("topOrderTotal");
+    const topOrderPoints = document.getElementById("topOrderPoints");
     const pointsEarnedEl = document.getElementById("pointsEarned");
     const customerNameEl = document.getElementById("customerName");
     const customerPhoneEl = document.getElementById("customerPhone");
@@ -1246,6 +1351,8 @@
       subtotalEl.textContent = formatMoney(subtotal);
       totalEl.textContent = formatMoney(subtotal);
       pointsEarnedEl.textContent = formatNumber(pointsEarned) + " pts";
+      topOrderTotal.textContent = formatMoney(subtotal);
+      topOrderPoints.textContent = "+" + formatNumber(pointsEarned) + " pts";
       checkoutButton.disabled = cart.size === 0;
     }
 

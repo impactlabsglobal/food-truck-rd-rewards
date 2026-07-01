@@ -50,10 +50,15 @@
     }
 
     .topbar {
-      display: flex;
+      border: 2px solid var(--ink);
+      border-radius: 18px;
+      padding: 16px;
+      display: grid;
+      grid-template-columns: minmax(260px, 1fr) auto;
       align-items: center;
       justify-content: space-between;
       gap: 16px;
+      background: #fff;
     }
 
     .brand {
@@ -75,8 +80,10 @@
     }
 
     .brand-mark {
-      width: 58px;
-      height: 58px;
+      width: 64px;
+      height: 64px;
+      background: #000;
+      color: #fff;
     }
 
     .brand-name {
@@ -89,14 +96,15 @@
     }
 
     .brand-sub {
-      margin-top: 10px;
+      margin-top: 8px;
       font-size: clamp(14px, 1.6vw, 18px);
       font-weight: 900;
       letter-spacing: .14em;
     }
 
     .top-actions {
-      display: flex;
+      display: grid;
+      grid-template-columns: auto auto auto;
       gap: 14px;
       align-items: center;
     }
@@ -139,6 +147,88 @@
       width: 56px;
       display: grid;
       place-items: center;
+    }
+
+    .login-panel {
+      border: 2px solid var(--line);
+      border-radius: var(--radius);
+      padding: 18px;
+      display: grid;
+      grid-template-columns: minmax(220px, 1fr) minmax(0, 1.4fr) auto;
+      gap: 16px;
+      align-items: center;
+      background: #fff;
+    }
+
+    .login-title {
+      margin: 0 0 6px;
+      font-size: clamp(20px, 2.2vw, 26px);
+      font-weight: 900;
+    }
+
+    .login-copy {
+      margin: 0;
+      color: var(--muted);
+      font-size: 16px;
+      font-weight: 800;
+      line-height: 1.35;
+    }
+
+    .login-fields {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 118px;
+      gap: 10px;
+    }
+
+    .login-fields input {
+      width: 100%;
+      min-height: 58px;
+      border: 2px solid var(--ink);
+      border-radius: 12px;
+      padding: 0 14px;
+      font-size: 20px;
+      font-weight: 900;
+    }
+
+    .login-actions {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      justify-content: end;
+    }
+
+    .login-button,
+    .identity-button {
+      min-height: 58px;
+      border: 2px solid var(--ink);
+      border-radius: 12px;
+      font-size: 18px;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .login-button {
+      background: #000;
+      color: #fff;
+      padding: 0 18px;
+    }
+
+    .identity-button {
+      background: #fff;
+      color: #000;
+      padding: 0 16px;
+      display: flex;
+      align-items: center;
+      gap: 9px;
+    }
+
+    .login-status {
+      grid-column: 1 / -1;
+      min-height: 22px;
+      margin: 0;
+      color: #0b7d43;
+      font-size: 15px;
+      font-weight: 900;
     }
 
     .stats {
@@ -757,6 +847,33 @@
         gap: 10px;
       }
 
+      .topbar {
+        grid-template-columns: 1fr;
+      }
+
+      .top-actions {
+        width: 100%;
+        grid-template-columns: 1fr 56px 56px;
+      }
+
+      .header-cart {
+        width: 100%;
+      }
+
+      .login-panel {
+        grid-template-columns: 1fr;
+      }
+
+      .login-actions {
+        justify-content: stretch;
+      }
+
+      .identity-button,
+      .login-button {
+        flex: 1;
+        justify-content: center;
+      }
+
       .help-button span {
         display: none;
       }
@@ -847,7 +964,7 @@
       }
 
       .topbar {
-        align-items: start;
+        align-items: stretch;
       }
 
       .top-actions {
@@ -866,6 +983,15 @@
       .home-button {
         min-height: 48px;
         width: 48px;
+      }
+
+      .login-fields {
+        grid-template-columns: 1fr;
+      }
+
+      .login-actions {
+        display: grid;
+        grid-template-columns: 1fr;
       }
 
       .stats {
@@ -952,6 +1078,32 @@
       </div>
     </header>
 
+    <section class="login-panel" aria-label="Acceso del cliente">
+      <div>
+        <h2 class="login-title">Acceso de cliente</h2>
+        <p class="login-copy">Entra con telefono, Google o Apple ID para guardar puntos y pedidos.</p>
+      </div>
+
+      <div class="login-fields">
+        <input id="loginPhone" type="tel" value="809-123-4567" inputmode="tel" aria-label="Numero de telefono" />
+        <input id="loginCode" type="password" value="1234" inputmode="numeric" maxlength="4" aria-label="Codigo de 4 digitos" />
+      </div>
+
+      <div class="login-actions">
+        <button class="login-button" type="button" id="phoneLoginButton">ENTRAR</button>
+        <button class="identity-button" type="button" data-provider="Google" aria-label="Entrar con Google">
+          <span aria-hidden="true">G</span>
+          Google
+        </button>
+        <button class="identity-button" type="button" data-provider="Apple ID" aria-label="Entrar con Apple ID">
+          <span aria-hidden="true"></span>
+          Apple
+        </button>
+      </div>
+
+      <p class="login-status" id="loginStatus">Cliente activo: 809-123-4567</p>
+    </section>
+
     <section class="stats" aria-label="Resumen del cliente">
       <article class="stat">
         <div class="round-icon" aria-hidden="true">
@@ -1001,7 +1153,7 @@
         </div>
         <div>
           <p class="stat-label">CLIENTE</p>
-          <p class="stat-note">809-123-4567</p>
+          <p class="stat-note" id="topCustomerPhone">809-123-4567</p>
           <p class="stat-note">Salir</p>
         </div>
       </article>
@@ -1323,10 +1475,15 @@
     const pointsEarnedEl = document.getElementById("pointsEarned");
     const customerNameEl = document.getElementById("customerName");
     const customerPhoneEl = document.getElementById("customerPhone");
+    const loginPhoneEl = document.getElementById("loginPhone");
+    const loginCodeEl = document.getElementById("loginCode");
+    const phoneLoginButton = document.getElementById("phoneLoginButton");
+    const loginStatus = document.getElementById("loginStatus");
     const paymentMethodEl = document.getElementById("paymentMethod");
     const checkoutButton = document.getElementById("checkoutButton");
     const checkoutNote = document.getElementById("checkoutNote");
     const historyList = document.getElementById("historyList");
+    const topCustomerPhone = document.getElementById("topCustomerPhone");
     const profilePhone = document.getElementById("profilePhone");
     const profilePoints = document.getElementById("profilePoints");
     const rewardGrid = document.getElementById("rewardGrid");
@@ -1357,8 +1514,34 @@
     function renderStats() {
       pointsEl.textContent = formatNumber(customer.points);
       visitsEl.textContent = formatNumber(customer.visits);
+      topCustomerPhone.textContent = customer.phone;
       profilePhone.textContent = customer.phone;
       profilePoints.textContent = formatNumber(customer.points);
+      customerPhoneEl.value = customer.phone;
+      loginStatus.textContent = "Cliente activo: " + customer.phone;
+    }
+
+    function signInWithPhone() {
+      const phone = loginPhoneEl.value.trim();
+      const code = loginCodeEl.value.trim();
+
+      if (!phone || code.length < 4) {
+        loginStatus.textContent = "Escribe telefono y codigo de 4 digitos.";
+        return;
+      }
+
+      customer.phone = phone;
+      customer.history.unshift("Login por telefono: " + phone);
+      renderStats();
+      renderHistory();
+    }
+
+    function signInWithProvider(provider) {
+      customer.name = provider + " Cliente";
+      customer.phone = provider === "Google" ? "Google conectado" : "Apple ID conectado";
+      customer.history.unshift("Login con " + provider);
+      renderStats();
+      renderHistory();
     }
 
     function renderCategories() {
@@ -1528,6 +1711,13 @@
     });
 
     checkoutButton.addEventListener("click", confirmOrder);
+    phoneLoginButton.addEventListener("click", signInWithPhone);
+
+    document.querySelectorAll("[data-provider]").forEach((button) => {
+      button.addEventListener("click", () => {
+        signInWithProvider(button.dataset.provider);
+      });
+    });
 
     rewardGrid.addEventListener("click", (event) => {
       const button = event.target.closest("[data-reward]");

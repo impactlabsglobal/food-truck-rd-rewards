@@ -36,6 +36,19 @@
       cursor: pointer;
     }
 
+    body:not(.is-logged-in) .app-after-login {
+      display: none !important;
+    }
+
+    body.is-logged-in .login-panel {
+      display: none;
+    }
+
+    body:not(.is-logged-in) .tablet {
+      grid-template-rows: auto minmax(0, 1fr);
+      align-items: start;
+    }
+
     .tablet {
       width: min(100vw, 1086px);
       min-height: 100vh;
@@ -158,6 +171,47 @@
       gap: 16px;
       align-items: center;
       background: #fff;
+    }
+
+    body:not(.is-logged-in) .login-panel {
+      width: min(720px, 100%);
+      margin: 18px auto 0;
+      padding: clamp(24px, 4vw, 42px);
+      grid-template-columns: 1fr;
+      gap: 22px;
+      border-color: var(--ink);
+      text-align: center;
+    }
+
+    body:not(.is-logged-in) .login-title {
+      font-size: clamp(34px, 5vw, 54px);
+    }
+
+    body:not(.is-logged-in) .login-copy {
+      width: min(520px, 100%);
+      margin: 0 auto;
+      font-size: clamp(18px, 2vw, 24px);
+    }
+
+    body:not(.is-logged-in) .login-fields {
+      width: min(540px, 100%);
+      margin: 0 auto;
+      grid-template-columns: minmax(0, 1fr) 150px;
+    }
+
+    body:not(.is-logged-in) .login-actions {
+      width: min(620px, 100%);
+      margin: 0 auto;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    body:not(.is-logged-in) .login-button,
+    body:not(.is-logged-in) .identity-button {
+      min-height: 70px;
+      min-width: 170px;
+      justify-content: center;
+      font-size: 20px;
     }
 
     .login-title {
@@ -1050,7 +1104,7 @@
         </div>
       </div>
 
-      <div class="top-actions">
+      <div class="top-actions app-after-login">
         <button class="header-cart" type="button" data-view="inicio" aria-label="Carrito y monto actual">
           <svg width="29" height="29" viewBox="0 0 24 24" aria-hidden="true">
             <path d="M6 6h15l-2 8H8L6 6z"></path>
@@ -1081,7 +1135,7 @@
     <section class="login-panel" aria-label="Acceso del cliente">
       <div>
         <h2 class="login-title">Acceso de cliente</h2>
-        <p class="login-copy">Entra con telefono, Google o Apple ID para guardar puntos y pedidos.</p>
+        <p class="login-copy">Entra para ordenar, acumular puntos y canjear premios.</p>
       </div>
 
       <div class="login-fields">
@@ -1101,10 +1155,10 @@
         </button>
       </div>
 
-      <p class="login-status" id="loginStatus">Cliente activo: 809-123-4567</p>
+      <p class="login-status" id="loginStatus">Usa tu telefono, Google o Apple ID.</p>
     </section>
 
-    <section class="stats" aria-label="Resumen del cliente">
+    <section class="stats app-after-login" aria-label="Resumen del cliente">
       <article class="stat">
         <div class="round-icon" aria-hidden="true">
           <svg width="37" height="37" viewBox="0 0 24 24">
@@ -1159,7 +1213,7 @@
       </article>
     </section>
 
-    <section class="panel menu-panel app-view" data-panel="inicio">
+    <section class="panel menu-panel app-view app-after-login" data-panel="inicio">
       <div>
         <div class="menu-head">
           <div>
@@ -1215,28 +1269,28 @@
       </aside>
     </section>
 
-    <section class="panel redeem-panel app-view hidden" data-panel="canjear">
+    <section class="panel redeem-panel app-view app-after-login hidden" data-panel="canjear">
       <h2 class="section-title">CANJEAR PREMIO</h2>
       <p class="section-copy">Selecciona el premio que deseas canjear</p>
 
       <div class="reward-grid" id="rewardGrid"></div>
     </section>
 
-    <section class="panel view-placeholder app-view hidden" data-panel="historial">
+    <section class="panel view-placeholder app-view app-after-login hidden" data-panel="historial">
       <div>
         <h2>Historial</h2>
         <div class="history-list" id="historyList"></div>
       </div>
     </section>
 
-    <section class="panel view-placeholder app-view hidden" data-panel="invitar">
+    <section class="panel view-placeholder app-view app-after-login hidden" data-panel="invitar">
       <div>
         <h2>Invitar</h2>
         <p>Comparte tu codigo BRD-AMIGO. Cuando tu referido compre por primera vez, ganas 200 puntos.</p>
       </div>
     </section>
 
-    <section class="panel view-placeholder app-view hidden" data-panel="perfil">
+    <section class="panel view-placeholder app-view app-after-login hidden" data-panel="perfil">
       <div>
         <h2>Perfil</h2>
         <div class="profile-list">
@@ -1247,14 +1301,14 @@
       </div>
     </section>
 
-    <section class="panel view-placeholder app-view hidden" data-panel="ayuda">
+    <section class="panel view-placeholder app-view app-after-login hidden" data-panel="ayuda">
       <div>
         <h2>Ayuda</h2>
         <p>Presenta el código activo al cajero.</p>
       </div>
     </section>
 
-    <section class="panel code-panel">
+    <section class="panel code-panel app-after-login">
       <h2 class="section-title">CÓDIGO DE CANJE</h2>
       <p class="code-copy" id="codeCopy">Presenta este código al cajero. Válido por 15 minutos.</p>
       <div class="code-strip" aria-live="polite">
@@ -1276,7 +1330,7 @@
       </div>
     </section>
 
-    <nav class="nav" aria-label="Navegación principal">
+    <nav class="nav app-after-login" aria-label="Navegación principal">
       <button class="active" type="button" data-view="inicio">
         <svg width="30" height="30" viewBox="0 0 24 24" aria-hidden="true">
           <path d="M3 11.5 12 4l9 7.5"></path>
@@ -1321,7 +1375,7 @@
       </button>
     </nav>
 
-    <footer class="site-footer" aria-label="Redes sociales y enlaces legales">
+    <footer class="site-footer app-after-login" aria-label="Redes sociales y enlaces legales">
       <p class="footer-title">REDES SOCIALES Y ENLACES</p>
       <div class="social-row">
         <a class="social-link facebook" href="https://www.facebook.com/RDBOLW" aria-label="Facebook RDBOLW">f</a>
@@ -1518,7 +1572,9 @@
       profilePhone.textContent = customer.phone;
       profilePoints.textContent = formatNumber(customer.points);
       customerPhoneEl.value = customer.phone;
-      loginStatus.textContent = "Cliente activo: " + customer.phone;
+      if (document.body.classList.contains("is-logged-in")) {
+        loginStatus.textContent = "Cliente activo: " + customer.phone;
+      }
     }
 
     function signInWithPhone() {
@@ -1532,6 +1588,7 @@
 
       customer.phone = phone;
       customer.history.unshift("Login por telefono: " + phone);
+      document.body.classList.add("is-logged-in");
       renderStats();
       renderHistory();
     }
@@ -1540,6 +1597,7 @@
       customer.name = provider + " Cliente";
       customer.phone = provider === "Google" ? "Google conectado" : "Apple ID conectado";
       customer.history.unshift("Login con " + provider);
+      document.body.classList.add("is-logged-in");
       renderStats();
       renderHistory();
     }
